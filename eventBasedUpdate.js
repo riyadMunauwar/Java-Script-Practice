@@ -1,3 +1,22 @@
+
+
+
+
+
+
+
+function EventBasedUpdate(){};
+
+
+EventBasedUpdate.prototype.components = [];
+EventBasedUpdate.prototype.store = null;
+
+
+EventBasedUpdate.prototype.changeState  = function(setState){
+  setState(this.store);
+  this.renderUi();
+};
+
 EventBasedUpdate.prototype.setStore = function(store){this.store = store;};
 
 EventBasedUpdate.prototype.select = function(el){
@@ -47,9 +66,6 @@ app.init();
 app.on('btn-1', 'click', () => {
   app.renderUi();
 });
-
-
-
 
 
 
