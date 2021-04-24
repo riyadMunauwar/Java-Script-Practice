@@ -1,15 +1,9 @@
 
-
-
-
-
-
-
 function EventBasedUpdate(){};
 
 
 EventBasedUpdate.prototype.components = [];
-EventBasedUpdate.prototype.store = null;
+EventBasedUpdate.prototype.store = {};
 
 
 EventBasedUpdate.prototype.changeState  = function(setState){
@@ -34,16 +28,28 @@ EventBasedUpdate.prototype.registerComponent = function(component){
 EventBasedUpdate.prototype.renderUi = function(){
   var _this = this;
   this.components.forEach(function(ui){
-    for(var handeler in ui){
-      ui[handeler](_this.store);
-    }
+    
+    if(ui.beforeRender) ui.beforeRender(_this.store);
+    
+    
+    if(ui.render) ui.render(_this.store);
+    else console.log('Render Function Missing')
+    
+    
+    if(ui.afterRender) ui.afterRender(_this.store);
+    
+//     for(var handeler in ui){
+//       ui[handeler](_this.store);
+//     }
+    
+    
   })
   
 }
 
 EventBasedUpdate.prototype.on = function(el,event, handeler){
   this.onEvent(el,event, handeler);
-  this.renderUi();
+//   this.renderUi();
 }
 
 EventBasedUpdate.prototype.init = function(){
@@ -54,20 +60,56 @@ EventBasedUpdate.prototype.init = function(){
 
 var app = new EventBasedUpdate();
 
-app.setStore(50)
+app.setStore({value: 500})
 
 
-app.registerComponent({name: (s) => app.changeState((s)=> {console.log('change');}), age: (s)=> console.log('age+s')})
+const Compo = function(){
+  return {
+    hand: function(){
+      app.changeState(function(s){
+        s.value = 500000;
+       
+      })
+    },
+    render: function(e){
+      console.log(e);
+    },
+//     afterRender: function(e){
+//       console.log('after Render');
+//     },
+    beforeRender: function(e){
+      
+    
+  
+
+
+
+    }
+  }
+}
+
+
+
+app.registerComponent(Compo());
+app.registerComponent({render: function(){console.log('Compo Two');}});
+app.registerComponent({render: function(){console.log('Compo Three');}});
+app.registerComponent({render: function(){console.log('Compo Four');}});
 
 
 
 app.init();
 
-app.on('btn-1', 'click', () => {
-  app.renderUi();
-});
+// app.changeState(function(state){
+//   state.value = 60;
+// })
 
 
+
+function hand(){
+  console.log('click')
+}
+
+app.on('btn-1', 'click', Compo().hand);
 
 
 
