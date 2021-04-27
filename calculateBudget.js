@@ -1,14 +1,3 @@
-// Demo Store
-const store = {
-    total: {
-        expanse: [{value: 500}, {value: 300}, {value: 1000}],
-        income: [{value: 6500}, {value: 600}, {value: 3600}]
-    },
-    budget: 0,
-    expanse: 0,
-    percentate: -1
-}
-
 
 function Budget(store){
 
@@ -41,12 +30,4 @@ function Budget(store){
 }
 
 
-console.log('Before action',store);
-
-app.updateBudget();
-
-store.total.expanse.push({value: 3000});
-
-app.updateBudget();
-
-console.log('after action', store);
+export default Budget;

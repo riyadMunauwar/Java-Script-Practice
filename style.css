@@ -1,0 +1,63 @@
+
+
+
+
+.section {
+    background-image: url('https://images.pexels.com/photos/7063762/pexels-photo-7063762.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 45vh;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.budget__box{
+    width: 40%;
+}
+
+.budget__total,
+.budget__expanse{
+    background: #fff;
+    border-radius: 7px;
+    height: 50px;
+    margin-bottom: 1rem;
+    font-size: 2rem;
+    text-align: center;
+    font-weight: bold;
+}
+
+.budget__input {
+    display: flex;
+}
+
+/* .input:nth-child(1) {
+    flex-basis: 10%;
+}
+.input:nth-child(2) {
+    flex-basis: 50%;
+}
+.input:nth-child(3) {
+    flex-basis: 30%;
+}
+.input:nth-child(4) {
+    flex-basis: 10%;
+} */
+
+/* .input__one {
+    flex: 1;
+}
+
+.input__two{
+    flex: 3;
+}
+
+.input__three {
+    flex: 2;
+}
+
+.input__four {
+    flex: 1;
+} */
