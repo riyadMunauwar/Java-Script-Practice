@@ -10,7 +10,7 @@ function Budget(store){
             return sum;
         },
         setBudget: function(){
-            store.budget = this.calTotalExp(store.total.income);
+            store.budget = this.calTotalExp(store.total.income) - this.calTotalExp(store.total.expanse);
         },
         setExpanse: function(){
             store.expanse = this.calTotalExp(store.total.expanse);

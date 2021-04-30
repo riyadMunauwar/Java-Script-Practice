@@ -44,11 +44,104 @@ budget.updateBudget();
 
 
 
+// Add Item Component
+
+const addItemComponent = {
+
+    addItem: function(){
+
+        app.action(function(store){
+            function getInputValue(){
+            
+                var item = {
+                    type: select('.input__type').value,
+                    description: select('.input__description').value,
+                    value: parseInt(select('.input__value').value)
+                }
+        
+                return item;
+            }
+    
+    
+    
+            function creatItem (id, description, value){
+                return {id: id, description: description, value: value};
+            }
+    
+            function clearFeild(){
+                // select('.input__type').value = '+';
+                select('.input__description').value = '';
+                select('.input__value').value = '';
+            }
+    
+    
+    
+            var item = getInputValue();
+            var type = item.type;
+            var ID;
+    
+            if(type === '+') {
+                ID = store.total.income.length - 1;
+                item = creatItem(ID, item.description, item.value);
+            }else{
+    
+                ID = store.total.expanse.length - 1;
+                item = creatItem(ID, item.description, item.value);
+    
+            }
+    
+    
+            
+    
+            if(type === '+') store.total.income.push(item);
+            else store.total.expanse.push(item);
+
+
+            clearFeild();
+            budget.updateBudget();
+
+            
+        })
+        
+
+
+    },
+
+    event: function(){
+        select('.input__button').addEventListener('click',this.addItem);
+    }
+}
+
+
+// Budget Componet
+const budgetComponent = {
+    render: function(store){
+        select('.budget__total').innerText = store.budget;
+        select('.budget__expanse').innerText = store.expanse;
+    }
+}
+
+// Income Component
 const incomeComponent = {
     deleteItem: function(){
-        app.action(function(store){
-            store.total.income.pop();
+        var _this = this;
+
+        app.action(function(store) {
+            
+            var id = _this.parentNode.parentNode.children[0].innerText;
+            id = parseInt(id);
+            var getItem = null;
+
+            store.total.income.forEach(function(item){
+                if(item.id === id) getItem = item;
+            })
+
+            var index = store.total.income.indexOf(getItem);
+
+            confirm('Are You Sure Deleteting ' + getItem.description);
+            store.total.income.splice(index, 1);
             budget.updateBudget();
+
         })
     },
     event: function(){
@@ -85,11 +178,28 @@ const incomeComponent = {
 }
 
 
-
+// Expanse Component
 const expanseComponent = {
-    deleteItem: function(){
+    getThis: function(){
+        return this;
+    },
+    deleteItem: function(e){
+        var _this = this;
+
         app.action(function(store) {
-            store.total.expanse.pop();
+            
+            var id = _this.parentNode.parentNode.children[0].innerText;
+            id = parseInt(id);
+            var getItem = null;
+
+            store.total.expanse.forEach(function(item){
+                if(item.id === id) getItem = item;
+            })
+
+            var index = store.total.expanse.indexOf(getItem);
+
+            confirm('Are You Sure Deleteting ' + getItem.description);
+            store.total.expanse.splice(index, 1);
             budget.updateBudget();
 
         })
@@ -137,6 +247,8 @@ const expanseComponent = {
 // Register Component
 app.regComponent(expanseComponent);
 app.regComponent(incomeComponent);
+app.regComponent(budgetComponent);
+app.regComponent(addItemComponent);
 
 // Init app
 app.init();
